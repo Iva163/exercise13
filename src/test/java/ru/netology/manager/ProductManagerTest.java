@@ -16,6 +16,7 @@ public class ProductManagerTest {
     Product product4 = new Smartphone(21, "iPhone 13", 61_599, "Apple");
     Product product5 = new Smartphone(22, "iPhone 14", 132_399, "Apple");
 
+
     @BeforeEach
     public void setup() {
         products.add(product1);
@@ -34,7 +35,25 @@ public class ProductManagerTest {
     }
 
     @Test
-    public void shouldSearchBy() {
+    public void shouldSearchByAuthor() {
+        Product[] expected = {product1};
+        Product[] actual = products.searchBy("Пушкин");
+
+        Assertions.assertArrayEquals(expected, actual);
+
+    }
+
+    @Test
+    public void shouldSearchByFabricator() {
+        Product[] expected = {product4, product5};
+        Product[] actual = products.searchBy("Apple");
+
+        Assertions.assertArrayEquals(expected, actual);
+
+    }
+
+    @Test
+    public void shouldSearchByNameBook() {
         Product[] expected = {product1, product3};
         Product[] actual = products.searchBy("Стихотворения");
 
@@ -43,9 +62,18 @@ public class ProductManagerTest {
     }
 
     @Test
+    public void shouldSearchByNameSmartphone() {
+        Product[] expected = {product4};
+        Product[] actual = products.searchBy("iPhone 13");
+
+        Assertions.assertArrayEquals(expected, actual);
+
+    }
+
+    @Test
     public void shouldSearchByNotExist() {
         Product[] expected = new Product[0];
-        Product[] actual = products.searchBy("Iphone");
+        Product[] actual = products.searchBy("Тест");
 
         Assertions.assertArrayEquals(expected, actual);
 
