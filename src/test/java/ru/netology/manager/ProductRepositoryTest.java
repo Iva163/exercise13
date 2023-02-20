@@ -40,15 +40,18 @@ public class ProductRepositoryTest {
     }
 
     @Test
-    public void shouldRemoveByIdNotExist() {
+    public void shouldRemoveByIdNotFoundException() {
+        Assertions.assertThrows(NotFoundException.class, () -> {
+            repository.removeById(25);
+        });
+    }
 
-        repository.removeById(25);
-
-        Product[] expected = {product1, product2, product3, product4, product5};
-        Product[] actual = repository.findAll();
-
-        Assertions.assertArrayEquals(expected, actual);
-
+    @Test
+    public void shouldSaveAlreadyExistsException() {
+        Product product = new Smartphone(22, "iPhone 14", 132_399, "Apple");
+        Assertions.assertThrows(AlreadyExistsException.class, () -> {
+            repository.save(product);
+        });
     }
 
 
